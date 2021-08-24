@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+    <style>
+
+        body{
+            width: 80%;
+            margin: auto;
+        }
+
+        #btn{
+            margin-top: 20px;
+        }
+
+        .user{
+            background-color:cadetblue;
+             display:flex;
+             margin-bottom:20px;
+             padding:15px;
+        }
+
+        .user li{
+            list-style: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <button id="btn">Get Users</button>
+    <br>
+
+    <h1>Json Users</h1>
+    <div id="users"></div>
+
+    <script>
+
+        document.getElementById("btn").addEventListener("click",loadUsers);
+
+    function loadUsers(){
+    const xhr=new XMLHttpRequest();
+
+    xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+
+    xhr.onload=function() {
+
+        const jsonUsers=JSON.parse(xhr.response);
+        const usersDiv = document.getElementById("users");
+
+                let output = "";
+
+            for (let user of jsonUsers) {
+
+                output += `
+
+                <div class="user">
+                
+                <ul>
+
+                <li>ID: ${user.id}</li>  
+                <li>Name: ${user.name}</li>    
+                <li>Username: ${user.username}</li>  
+                <li>Email: ${user.email}</li>  
+                <li>Phone: ${user.phone}</li>  
+                <li>Website: ${user.website}</li>  
+                <li>Company Name: ${user.company.name}</li>  
+
+                </ul>
+
+                </div>
+         `;
+        }
+
+        usersDiv.innerHTML = output;
+    };
+
+    xhr.send();
+
+    }
+
+    </script>
+</body>
+</html>
